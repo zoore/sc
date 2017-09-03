@@ -18,7 +18,7 @@
 		canvas {	
 			-ms-touch-action: none;
 			image-rendering: -o-crisp-edges;           
-			image-rendering: optimize-contrast;        
+			image-rendering: optimize-contrast;
 			-ms-interpolation-mode: nearest-neighbor;  
 			-webkit-tap-highlight-color: rgba(0,0,0,0);
 			-moz-tap-highlight-color: rgba(0,0,0,0);
@@ -35,9 +35,26 @@
 <body>
 <div id="viewporter">
 <canvas id="canvas" moz-opaque></canvas>
+	<button onclick="weixinShareTimeline('','','','')">分享给朋友</button>
+</div>
+<div>
+
 </div>
 </body>
 <script src="TweenMax.min.js"></script>
 <script src="howler.js"></script>
 <script src="app.js"></script>
+<script>
+    function weixinShareTimeline(title,desc,link,imgUrl){
+        alert("jj");
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url":"http://www.rologo.com/images/uploads/2016/01/bing-new-logo-1920-800x338-768x324.jpg",
+            "img_width":"640",
+            "img_height":"640",
+            "link":"www.baidu.com?username=aa",
+            "desc": "zicedesc",
+            "title":"zice"
+        });
+    }
+</script>
 </html>
