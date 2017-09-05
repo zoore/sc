@@ -86,10 +86,13 @@ function initMapScreen() {
                 id: g
             }, "image", h), d.push(h), totalScore += saveDataHandler.aLevelStore[3 * g + 2]
         } else if (1 == saveDataHandler.aLevelStore[3 * g]) {
+            alert("当前关卡：" + g);
+            //通过g的判断决定使用哪一张背景图，即可以换成具体某一代车型
             levelTheme = "city", 3 > g ? levelTheme = "forest" : g > 5 && (levelTheme = "desert");
             var h = {
                 oImgData: assetLib.getData("uiElements"),
                 aPos: aMapPointData[g],
+                // levelTheme控制即将打开关卡的图片
                 id: levelTheme,
                 noFloat: !0
             };
@@ -105,7 +108,7 @@ function initMapScreen() {
         previousTime = (new Date).getTime(), updateMapEvent()
 
     // 总分记录在这里，通过ajax发送到后台保存***********************************************************************************************
-    alert("总分是：" + totalScore + " g是什么： " + g);
+    alert("总分是：" + totalScore);
     // *************************************************************************************************************************************
 }
 
@@ -337,6 +340,10 @@ function initLevelComplete() {
     3 * (levelNum + 1)] = 1), saveDataHandler.saveData(), previousTime = (new Date).getTime(), updateLevelComplete();
 
     // 该函数到此执行结束，下面语句不再执行
+    // 第六、八关可领取优惠券
+    if (levelNum == 5 || levelNum == 7) {
+        window.location.href='coupon.html';
+    }
     loadmeover();
 
     var mescore = levelScore;
