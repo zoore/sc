@@ -35,7 +35,7 @@ function initStartScreen() {
 
 // 游戏排行榜
 function initCreditsScreen() {
-    window.location.href = "ranking.html";
+    window.location.href = "../ranking.html";
     //gameState = "credits";
     //var a = {oImgData: assetLib.getData("uiButs"), aPos: [61, 359], id: "back"};
     //userInput.addHitArea("backFromCredits", butEventHandler, null, "image", a);
@@ -45,7 +45,7 @@ function initCreditsScreen() {
 
 // 游戏规则页面
 function initRuleScreen() {
-    window.location.href = "rule.html";
+    window.location.href = "../rule.html";
 }
 
 // 初始化地图关卡页面
@@ -342,7 +342,7 @@ function initLevelComplete() {
     // 该函数到此执行结束，下面语句不再执行
     // 第六、八关可领取优惠券
     if (levelNum == 5 || levelNum == 7) {
-        window.location.href='coupon.html';
+        window.location.href='../coupon.html';
     }
     loadmeover();
 
@@ -352,7 +352,7 @@ function initLevelComplete() {
     Getscore(mescore, 387, mefont, melevel);
     alert("本局得分：" + levelScore + "  关卡：" + levelNum);
     if (levelNum == 2) {
-        window.location.href='coupon.html';
+        window.location.href='../coupon.html';
     }
 }
 
