@@ -86,17 +86,16 @@ function initMapScreen() {
                 id: g
             }, "image", h), d.push(h), totalScore += saveDataHandler.aLevelStore[3 * g + 2]
         } else if (1 == saveDataHandler.aLevelStore[3 * g]) {
-            //alert("当前关卡：" + g);
+            alert("当前关卡：" + g);
             //通过g的判断决定使用哪一张背景图，即可以换成具体某一代车型
-            //levelTheme = "city", 3 > g ? levelTheme = "forest" : g > 5 && (levelTheme = "desert");
-            // todo levelTheme现在已经被孤立，只是绑定了激活时的关卡图片，和具体游戏场景解绑
-            if (g == 0) {
-                levelTheme = "city";
-            } else if (g == 1 ) {
-                levelTheme = "forest";
-            } else if (g == 2 ) {
-                levelTheme = "desert";
-            }
+            levelTheme = "city", 3 > g ? levelTheme = "forest" : g > 5 && (levelTheme = "desert");
+            //if (g == 0) {
+            //    levelTheme = "city";
+            //} else if (g == 1 ) {
+            //    levelTheme = "forest";
+            //} else if (g == 2 ) {
+            //    levelTheme = "desert";
+            //}
 
             var h = {
                 oImgData: assetLib.getData("uiElements"),
@@ -116,37 +115,13 @@ function initMapScreen() {
         panel.highlight.x = e, panel.highlight.y = f, panel.oScoreData.totalScore = totalScore, panel.startTween1(),
         previousTime = (new Date).getTime(), updateMapEvent()
 
-    // todo 总分记录在这里，通过ajax发送到后台保存***********************************************************************************************
-    //alert("总分是：" + totalScore);
+    // 总分记录在这里，通过ajax发送到后台保存***********************************************************************************************
+    alert("总分是：" + totalScore);
     // *************************************************************************************************************************************
 }
 
 // 跑道长度-----raceLength = 4e4 + 1e3 * levelNum
 function initGame() {
-
-    // 根据关卡定制场景，不然无法通过levelTheme定制解锁时车辆的图片
-    // todo usercar and difficulty
-    var themeRoad = "";
-    var themeSkyline = "";
-    var themeFog = "";
-    var themeGround = "";
-    if (levelNum == 0 || levelNum == 1 || levelNum == 2 ) {
-        themeRoad = "forestRoad";
-        themeSkyline = "forestSkyline";
-        themeFog = "forestFog";
-        themeGround = "forestGround";
-    } else if (levelNum == 3 || levelNum == 4 || levelNum == 5) {
-        themeRoad = "cityRoad";
-        themeSkyline = "citySkyline";
-        themeFog = "cityFog";
-        themeGround = "cityGround";
-    } else if (levelNum == 6 || levelNum == 7) {
-        themeRoad = "desertRoad";
-        themeSkyline = "desertSkyline";
-        themeFog = "desertFog";
-        themeGround = "desertGround";
-    }
-
     gameState = "game", 1 == audioType && (musicTween.kill(), musicTween = TweenLite.to(music, 1, {
         volume: .5,
         ease: "Linear.easeNone"
@@ -161,22 +136,14 @@ function initGame() {
     }, "rect", {
         aRect: [canvas.width / 2, 60, canvas.width, canvas.height]
     }, !0), userInput.addKey("steerRight", butEventHandler, null, 39), userInput.addKey("steerLeft", butEventHandler,
-        null, 37),
-
-        road = new Elements.Road(assetLib.getData(themeSkyline), assetLib.getData(themeFog), assetLib.getData(themeRoad), assetLib.getData(themeGround), levelTheme, levelNum,
-        canvas.width, canvas.height, roadCallback),
-
-        hud = new Elements.Hud(assetLib.getData("hud"), assetLib.getData(
-        "uiElements"), assetLib.getData("position"), canvas.width, canvas.height),
-        userCar = new Elements.UserCar(
-        assetLib.getData("userCar"), canvas.width, canvas.height),
-        enemySpeed = 390 + 7.2 * levelNum,
-        raceLength =1000 + 1e3 * levelNum,
-        maxSpeed = 475 + 6.75 * aPowerUpBarData[1],
-        accRate = 4 - .32 * aPowerUpBarData[2],
-        turnRate =  1.8 + .375 * aPowerUpBarData[0],
-        nitroLength = 3 + .6 * aPowerUpBarData[3],
-        speed = 200, steerX = 0, rightSteer = 0, leftSteer = 0, curveAmount = 0, hillAmount = 0, tweenScaleTimer = 0, levelScore = 0, raceProgress = 0,
+        null, 37), road = new Elements.Road(assetLib.getData(levelTheme + "Skyline"), assetLib.getData(levelTheme +
+            "Fog"), assetLib.getData(levelTheme + "Road"), assetLib.getData(levelTheme + "Ground"), levelTheme, levelNum,
+        canvas.width, canvas.height, roadCallback), hud = new Elements.Hud(assetLib.getData("hud"), assetLib.getData(
+        "uiElements"), assetLib.getData("position"), canvas.width, canvas.height), userCar = new Elements.UserCar(
+        assetLib.getData("userCar"), canvas.width, canvas.height), enemySpeed = 390 + 7.2 * levelNum, raceLength =1000 + 1e3 * levelNum,
+        maxSpeed = 475 + 6.75 * aPowerUpBarData[1], accRate = 4 - .32 * aPowerUpBarData[2], turnRate =
+        1.8 + .375 * aPowerUpBarData[0], nitroLength = 3 + .6 * aPowerUpBarData[3], speed = 200, steerX = 0, rightSteer =
+        0, leftSteer = 0, curveAmount = 0, hillAmount = 0, tweenScaleTimer = 0, levelScore = 0, raceProgress = 0,
         leadProgress = raceLength * leadHeadStart, racePos = 19, carReleasedNum = 19, carReleaseDelay = 0,
         speedDifferencial = 0, overtakenInc = 1, bridgeDistanceTarg = raceLength / 4, startTimer = 0, endSoundPlayed = !
         1, offRoad = !1, startStage = 0, justSkid = !1, nitroMode = !1, curveTween = TweenMax.to(this, 10, {
@@ -346,7 +313,13 @@ function butEventHandler(a, b) {
 
 // 游戏结束之后的结算函数
 function initLevelComplete() {
-    //alert("本局得分：" + levelScore + "  关卡：" + levelNum);
+    // saveDataHandler.aLevelStore[0]--第一局是否玩过
+    // saveDataHandler.aLevelStore[2]--第一局得分
+    var isFirst = false;
+    if (1 == saveDataHandler.aLevelStore[0]) {
+        isFirst = true;
+    }
+
     gameState = "levelComplete", 1 == audioType && (musicTween.kill(), musicTween = TweenLite.to(music, 2, {
         volume: .2,
         ease: "Linear.easeNone"
@@ -380,6 +353,12 @@ function initLevelComplete() {
         winnings, 8 > levelNum && 0 == saveDataHandler.aLevelStore[3 * (levelNum + 1)] && (saveDataHandler.aLevelStore[
     3 * (levelNum + 1)] = 1), saveDataHandler.saveData(), previousTime = (new Date).getTime(), updateLevelComplete();
 
+    // 此处为好友助力
+    if (isFirst) {
+        // todo 调用后台加分接口
+        alert("您本次共为好友助力 " + saveDataHandler.aLevelStore[2]);
+    }
+
     // 该函数到此执行结束，下面语句不再执行
     // 第六、八关可领取优惠券
     if (levelNum == 5 || levelNum == 7) {
@@ -391,14 +370,13 @@ function initLevelComplete() {
     var mefont = "分";
     var melevel = "";
     Getscore(mescore, 387, mefont, melevel);
-    //alert("本局得分：" + levelScore + "  关卡：" + levelNum);
+    alert("本局得分：" + levelScore + "  关卡：" + levelNum);
     if (levelNum == 2) {
         window.location.href='../coupon.html';
     }
 }
 
 // 车辆升级页面
-
 function initUpgradeScreen() {
     gameState = "upgrade", background = new Elements.Background(assetLib.getData("upgradeBackground"), canvas.width,
         canvas.height);
@@ -889,7 +867,7 @@ function loadAssets() {
                 width: 92,
                 height: 93
             },
-            fores: {
+            forest: {
                 x: 594,
                 y: 664,
                 width: 108,
@@ -1709,28 +1687,18 @@ var Elements;
                 this.horizon + 100 * this.hillAmount
         }, b.prototype.addScenery = function () {
             var c, b = Math.floor(3 * Math.random());
-
-            // 使得场景路边道具与levelTheme变量无关
-            var themeScenery = "";
-            if (levelNum == 0 || levelNum == 1 || levelNum == 2 ) {
-                themeScenery = "forest";
-            } else if (levelNum == 3 || levelNum == 4 || levelNum == 5) {
-                themeScenery = "city";
-            } else if (levelNum == 6 || levelNum == 7) {
-                themeScenery = "desert";
-            }
             switch (this.sceneryDir++, this.bridgeRow < 20 && 0 == this.sceneryDir % 10 && (this.bridgeRow++, b = this.bridgeType),
                 b) {
                 case 0:
-                    c = new a.Scenery(assetLib.getData("scenery"), themeScenery + "0", this.sceneryDir % 2, canvas.width,
+                    c = new a.Scenery(assetLib.getData("scenery"), this.levelTheme + "0", this.sceneryDir % 2, canvas.width,
                         canvas.height);
                     break;
                 case 1:
-                    c = new a.Scenery(assetLib.getData("scenery"), themeScenery + "1", this.sceneryDir % 2, canvas.width,
+                    c = new a.Scenery(assetLib.getData("scenery"), this.levelTheme + "1", this.sceneryDir % 2, canvas.width,
                         canvas.height);
                     break;
                 case 2:
-                    c = new a.Scenery(assetLib.getData("scenery"), themeScenery + "2", this.sceneryDir % 2, canvas.width,
+                    c = new a.Scenery(assetLib.getData("scenery"), this.levelTheme + "2", this.sceneryDir % 2, canvas.width,
                         canvas.height);
                     break;
                 case 3:
@@ -2014,7 +1982,8 @@ navigator.userAgent.indexOf("Android") ? audioType = 0 : (audioType = 1, sound =
     volume: .2,
     loop: !0
 }));
-var panel, hud, background, totalScore = 0,
+var forFriend = $("#username").val(),
+    panel, hud, background, totalScore = 0,
     levelScore = 0,
     levelNum = 0,
     road, userCar, speed, steerX, targSteerX, rightSteer, leftSteer, turnRate, curveTween, hillTween, curveAmount,
@@ -2022,7 +1991,7 @@ var panel, hud, background, totalScore = 0,
     nitroSpeed = 650,
     nitroTimer, rightSteerSimple = 0,
     leftSteerSimple = 0,
-    hillAmount, saveDataHandler = new Utils.SaveDataHandler("sprintclubnitro1", 9),
+    hillAmount, saveDataHandler = new Utils.SaveDataHandler("sprintclub" + forFriend, 9),
     aMapPointData = new Array([55, 136], [101, 249], [192, 140], [348, 107], [264, 272], [407, 304], [532, 221], [509,
         53]),
     levelTheme, nitroMode, raceProgress, leadProgress, leadHeadStart = .2,

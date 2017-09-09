@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>赛车俱乐部--好友助力</title>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="HandheldFriendly" content="True">
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.01, minimal-ui" />
+<style>
+		body {
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			background-color:black;
+		}	
+
+		canvas {	
+			-ms-touch-action: none;
+			image-rendering: -o-crisp-edges;           
+			image-rendering: optimize-contrast;
+			-ms-interpolation-mode: nearest-neighbor;  
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			-moz-tap-highlight-color: rgba(0,0,0,0);
+			tap-highlight-color: rgba(0,0,0,0);
+			user-select: none;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+<script src="js/viewporter.js"></script>
+</head>
+<body>
+<div id="viewporter">
+<canvas id="canvas" moz-opaque></canvas>
+</div>
+<!--帮忙助力的好友，同时也是localStorage的key-->
+<input type="hidden" id="username" value="aaa">
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/TweenMax.min.js"></script>
+<script src="js/howler.js"></script>
+<script src="js/app.trial.js"></script>
+<script>
+    function weixinShareTimeline(title,desc,link,imgUrl){
+        alert("jj");
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url":"http://www.rologo.com/images/uploads/2016/01/bing-new-logo-1920-800x338-768x324.jpg",
+            "img_width":"640",
+            "img_height":"640",
+            "link":"www.baidu.com?username=aa",
+            "desc": "zicedesc",
+            "title":"zice"
+        });
+    }
+</script>
+</html>

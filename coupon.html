@@ -14,6 +14,9 @@
     <link href="css/chuyouwuyi01.css" rel="stylesheet" type="text/css">
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript">
+        // 超出部分隐藏，原因是背景图片太高了
+        document.documentElement.style.overflow='hidden';
+
         var phoneWidth = parseInt(window.screen.width);
         var phoneScale = phoneWidth / 640;
         var ua = navigator.userAgent;
@@ -46,45 +49,42 @@
     <div class="zd_middle">
         <div class="zd_zadan">
             <div class="zd_bg">
-                <img src="images/160615zadan/zd_cion18.png"  class="zd_bg01">
-                <img src="images/160615zadan/zd_cion18.png"  class="zd_bg02">
+                <img src="images/coupon/zd_cion18.png" class="zd_bg01">
+                <img src="images/coupon/zd_cion18.png" class="zd_bg02">
             </div>
             <div class="zd_jindan ">
-                <img src="images/160615zadan/zd_cion16.png">
+                <img src="images/coupon/zd_cion16.png">
             </div>
             <ul class="zd_bigcaidai">
                 <li class="cardai01 cardai">
-                    <img src="images/160615zadan/zd_cion15.png">
+                    <img src="images/coupon/zd_cion15.png">
                 </li>
                 <li class="cardai02 cardai">
-                    <img src="images/160615zadan/zd_cion14.png">
+                    <img src="images/coupon/zd_cion14.png">
                 </li>
                 <li class="cardai03 cardai">
-                    <img src="images/160615zadan/zd_cion13.png">
+                    <img src="images/coupon/zd_cion13.png">
                 </li>
                 <li class="cardai04 cardai">
-                    <img src="images/160615zadan/zd_cion12.png">
+                    <img src="images/coupon/zd_cion12.png">
                 </li>
                 <li class="cardai05 cardai">
-                    <img src="images/160615zadan/zd_cion11.png">
+                    <img src="images/coupon/zd_cion11.png">
                 </li>
                 <li class="cardai06 cardai">
-                    <img src="images/160615zadan/zd_cion10.png">
+                    <img src="images/coupon/zd_cion10.png">
                 </li>
             </ul>
             <div class="zd_chuizi">
-                <img src="images/160615zadan/zd_cion01.png">
+                <img src="images/coupon/zd_cion01.png">
             </div>
             <div class="zd_txt">
+                <input type="text" id="username" placeholder="请输入您的姓名" />
                 <input type="text" id="iphone1" placeholder="请输入手机号" />
                 <a href="javascript:;" id="submit" class="mom_btn tc">
-                    <img src="images/160615zadan/zd_cion07.png">
+                    <img src="images/coupon/zd_cion07.png">
                 </a>
             </div>
-        </div>
-        <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
-            <p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
-            <p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>
         </div>
     </div>
 
@@ -94,36 +94,60 @@
     <div class="pack pack_yl">
         <h1 class="tc">温馨提示</h1>
         <p class="tc"></p>
-        <a href="#">确定</a>
+        <a href="window.location.href='index.html'">返回游戏</a>
+    </div>
+</article>
+
+<article id="award">
+    <div class="pack pack_yl">
+        <h1 class="tc">温馨提示</h1>
+        <p class="tc"></p>
+        <a href="window.location.href='index.html'">返回游戏</a>
     </div>
 </article>
 <!-- 网站要用到的一些类库 -->
 
 <script type="text/javascript">
+    var checkUsername = function(str) {
+        var username = $.trim(str);
+        if (username.length == 0){
+            return false;
+        }
+        return true;
+    };
+
     var checkPhone = function(a) {
         var patrn = /^((?:13|15|18|14|17)\d{9}|0(?:10|2\d|[3-9]\d{2})[1-9]\d{6,7})$/;
         if (!patrn.exec(a)) return false;
         return true;
     };
+
     $(function() {
         $(window).on("load", function() {
             $("#loading").fadeOut();
-        })
+        });
         // ========================================浮层控制
         $("#tip .pack a").on("click", function() {
-            $("#tip").fadeOut()
-            $("#tip .pack p").html("")
+            $("#tip").fadeOut();
+            $("#tip .pack p").html("");
             return false;
         })
 
         function alerths(str) {
-            $("#tip").fadeIn()
-            $("#tip .pack p").html(str)
+            $("#tip").fadeIn();
+            $("#tip .pack p").html(str);
             return false;
         }
         $("#submit").on("click", function() {
             $('html,body').animate({scrollTop:0});
-            var str = $("#iphone1").val()
+
+            // todo jquery validation 后台验证每个手机号只能领取一次（若要避免流量攻击，需使用验证码）
+
+            var username = $("#username").val();
+            if (!checkUsername(username)) {
+                return alerths("领奖姓名不能为空！")
+            }
+            var str = $("#iphone1").val();
             if (str.length == 11 && checkPhone(str)) {
                 // 判断是不是11位手机号，为真提交
                 $(".zd_jindan").addClass("zd_jindan01");
@@ -151,7 +175,7 @@
                     //写中奖后的东西
                     $(".cardai").addClass("cardai07");
                     $(".zd_jindan").removeClass("zd_jindan01");
-                    alerths("恭喜你获得苹果电脑")
+                    alerths("恭喜你获得1000元购车券！！！")
                 });
             } else {
                 alerths("请输入正确的手机号！")

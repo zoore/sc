@@ -96,7 +96,7 @@
 /*============================砸蛋*/
 
 .zadan{
-	background: url(../images/160615zadan/zd_cion02.png) no-repeat left top;
+	background: url(../images/coupon/zd_cion02.png) no-repeat left top;
 	background-size: cover;
 	height: 100vh;
 	min-height: 1690px;
@@ -154,7 +154,7 @@
 }
 
 .zadan .zd_middle .zd_zadan{
-	background: url(../images/160615zadan/zd_cion17.png) no-repeat center bottom;
+	background: url(../images/coupon/zd_cion17.png) no-repeat center bottom;
 	width: 556px;
 	height: 840px;
 	margin: 0 auto;
@@ -209,7 +209,7 @@
 	}
 }
 .zadan .zd_middle .zd_zadan  .zd_bg{
-	/*background: url(../img/160615zadan/zd_cion09.png) no-repeat center center;*/
+	/*background: url(../img/coupon/zd_cion09.png) no-repeat center center;*/
 	position: absolute;
 }
 .zadan .zd_middle .zd_zadan .zd_bg01{
